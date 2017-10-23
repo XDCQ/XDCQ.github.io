@@ -1,3 +1,10 @@
+---
+layout: post
+title: Docker
+description: ~~~
+image: assets/images/02.jpg
+---
+
 #docker
 ##1.什么是docker
 &emsp;&emsp;Docker最初是dotCloud公司创始人Solomon Hykes在法国期间发起的一个公司内部项目,它是基于dotCloud	公司多年云服务技术的一次革新,并于2013年3月以Apache2.0授权协议开源,主要项目代码在GitHub上进行维护。
