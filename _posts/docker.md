@@ -13,17 +13,23 @@ image: assets/images/02.jpg
 ### 1.1传统的虚拟机结构（一类和二类）
 拥有一个Hypervisor作为虚拟机管理程序
 Hypervisor分为两类
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/VMM-Type1.JPG" width = "300" height = "200" alt="1" align=center />
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;一类Hypervisor
 目前的VM使用这种结构，Hypervisor直接运行在主机的硬件来控制硬件和管理客体操作系统上。需要硬件支持，开启虚拟化。
+
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/VMM-Type2.JPG" width = "300" height = "200" alt="2" align=center />
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;二类Hypervisor
 早期VM使用这种结构，在本机操作系统上虚拟出一套硬件后,在其上运行一个完整操作系统,在该系统上再运行所需应用进程；
 
 ### 1.2docker的结构
+
 <img src="http://dockerone.com/uploads/article/20160503/bbd6d8b6ca1556f737b452b72d105c78.png" width = "450" height = "300" alt="docker" align=center />
+
 ###1.3docker vs VMs
+
 <img src="http://cdn3.infoqstatic.com/statics_s2_20171017-0336-1/resource/articles/docker-core-technology-preview/zh/resources/0731013.jpg" width = "450" height = "300" alt="3" align=center />
+
 ###1.4为什么要使用docker
 作为一种新兴的虚拟化方式,Docker跟传统的虚拟化方式相比具有众多的优势。
 
