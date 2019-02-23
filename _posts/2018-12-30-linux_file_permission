@@ -1,0 +1,77 @@
+---
+layout: post
+title: Linux file permission
+description:
+image: assets/images/linux-file-permission.jpeg
+---
+
+## chmod
+
+```
+rwx�?）rwx�?）rwx�?�?```
+- 基本权限
+(1、所有者）�?、所属组）（3、其他用户）
+- 隐藏权限
+SUID�?�?SGID�?�?SBIT�?�?- ls -l 第三列为链接个数
+
+### SUID
+用户执行这个文件时将以文件所有者的身份执行�?>- 只有可执行的二进制程序才可以设置SetUID
+- 所有者必须对该文件具备x权限
+- 命令执行中，执行用户获取文件所有者的身份
+- 权限在程序执行后就消�?
+- 设置SetUid
+```
+chmod 4xxx < file-name >
+chmod u+s < file-name >
+```
+- 取消SetUid
+```
+chmod xxx < file-name >
+chmod u-s < file-name >
+```
+>例子：给vim加了SetUid权限后，用户可以用vim打开任意文件（vim所有者为root，加了权限以后就是root打开文件�?
+### SGID
+
+针对文件�?>- 可执行的二进制文�?
+- 所属组对该文件具备 x 权限
+- 命令执行中，执行用户的组成为文件所属组
+- 权限在程序执行后就消�?
+针对目录�?>- 普通用户对目录具备r和x权限，才可以进入到该目录
+- 普通用户在此目录中的有效组会变成此目录的所属组（误，不能执行目录所属组才能执行而普通用户不能执行的文件�?- 如普通用户对该目录具备w权限，新建文件的所属组为该目录的所属组
+
+>例子�?```
+#对目�?xdcq@XDCQ-ubuntu:~/test_su$ ls -ld .
+drwxrwsrwx 2 root root 4096 11�?19 17:27 .
+xdcq@XDCQ-ubuntu:~/test_su$ touch aa
+xdcq@XDCQ-ubuntu:~/test_su$ ls -l
+总用�?12
+-rw-r--r-- 1 xdcq root    0 11�?19 17:27 aa
+-rwxr-x--- 1 root root 8336 11�?19 17:20 strapp
+#对可执行二进制文�?[root@niesh ~]# ll /usr/bin/locate
+-rwx--s--x. 1 root slocate 40496 6�? 10 2014 /usr/bin/locate
+
+[root@niesh ~]# ll /var/lib/mlocate/mlocate.db
+-rw-r-----. 1 root slocate 6306909 7�? 30 19:15 /var/lib/mlocate/mlocate.db
+[niesh@niesh root]$ locate mlocate.db
+/usr/share/man/man5/mlocate.db.5.gz
+#提权至组idslocate才能查看mlocate.db文件
+```
+
+### SBIT
+
+针对目录�?>- 普通用户对该目录有w和x权限
+- 若赋了SBIT,则普通用户只能删除自己创建的文件/目录，而不能删除不属于自己的文�?目录�?若没有粘滞位，则普通用户可以对括其它用户建立的目录/文件进行删除操作（因为普通用户对目录具有w权限�?
+
+
+### 备注
+ 
+||二进制文件|目录|
+|-|-|-|
+|SUID|此用户将继承此程序的所有者权限|无意义|
+|SGID|此用户将继承此程序的所属组权限|此目录下所有用户新建文件都自动继承此目录的用户组|
+|SBIT|无意义|目录中每个用户仅能删除、移动或改名自己的文件或目录|
+
+```
+#查询所有s权限文件
+find / -type f \( -perm -04000 -o -perm -02000 \) -exec ls -lg {} \;
+```
